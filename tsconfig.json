@@ -8,6 +8,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/controller/NewletterController/hooks/.ts"],
   "exclude": ["node_modules", "dist"]
 }

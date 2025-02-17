@@ -1,10 +1,10 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-/*import initRoutes from "./routes/initRoutes";*/
+import initRoutes from "./routes/initRoutes";
 import dotenv from "dotenv";
 import path from "path";
-import pool from "./config/database";
+import { db } from "./config/database";
 
 const envPath = path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`);
 dotenv.config({ path: envPath });
@@ -15,7 +15,7 @@ class Server {
    constructor() {
       this.express = express();
       this.middlewares();
-      /*this.routes();*/
+      this.routes();
       this.database();
    }
 
@@ -25,15 +25,14 @@ class Server {
       this.express.use(bodyParser.urlencoded({ extended: false }));
    }
 
-   /*private routes() {
+   private routes() {
       this.express.use(initRoutes);
-   }*/
+   }
 
    private async database() {
       try {
-         const connection = await pool.getConnection();
+         await db.execute(`SELECT 1`);
          console.log(`Conectado ao MySQL (${process.env.NODE_ENV})`);
-         connection.release();
       } catch (error) {
          console.error(`Erro ao conectar no MySQL`, error);
       }
